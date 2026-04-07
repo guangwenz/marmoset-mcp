@@ -36,7 +36,7 @@ BRIDGE_URL = args.bridge_url.rstrip("/")
 
 mcp = FastMCP(
     "Marmoset Toolbag 5",
-    description="Control Marmoset Toolbag 5 — lighting, cameras, rendering, scene management",
+    instructions="Control Marmoset Toolbag 5 — lighting, cameras, rendering, scene management",
 )
 
 
