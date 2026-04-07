@@ -626,7 +626,7 @@ def _start_server():
     try:
         _server = HTTPServer((BRIDGE_HOST, BRIDGE_PORT), _Handler)
     except OSError as e:
-        _lbl_status.value = f"ERROR: {e}"
+        _lbl_status.text = f"ERROR: {e}"
         print(f"[{PLUGIN_NAME}] ERROR: {e}")
         return
 
@@ -637,7 +637,7 @@ def _start_server():
     # Register main-thread callback to process command queue safely
     mset.callbacks.onPeriodicUpdate = _process_queue
 
-    _lbl_actions.value = str(len(_ACTIONS))
+    _lbl_actions.text = str(len(_ACTIONS))
     _update_ui()
 
     print(f"[{PLUGIN_NAME}] ✓ Bridge running → http://{BRIDGE_HOST}:{BRIDGE_PORT}")
