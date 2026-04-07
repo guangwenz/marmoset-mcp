@@ -650,14 +650,19 @@ def _stop_server():
     if not _running:
         return
 
-    try:
-        _server.shutdown()
-    except Exception:
-        pass
-
     _running = False
     _update_ui()
+
+    # Shutdown in background thread so the Toolbag main thread never blocks
+    srv = _server
+    def _do_shutdown():
+        try:
+            srv.shutdown()
+        except Exception:
+            pass
+    threading.Thread(target=_do_shutdown, daemon=True).start()
     print(f"[{PLUGIN_NAME}] Server stopped.")
+
 
 
 def _on_shutdown():
