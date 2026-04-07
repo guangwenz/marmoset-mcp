@@ -41,30 +41,47 @@ _request_count = 0
 #  PLUGIN UI
 # ═══════════════════════════════════════════════════════════════════
 
-_window = mset.UIWindow(PLUGIN_NAME)
+_window = mset.UIWindow()
+_window.title = PLUGIN_NAME
 _window.width = 320
 _window.height = 180
 
-_lbl_status = mset.UILabel("Status:")
-_lbl_status.value = "Starting..."
+_lbl_status_hdr = mset.UILabel()
+_lbl_status_hdr.text = "Status:"
+_lbl_status_hdr.fixedWidth = 80
+_window.addElement(_lbl_status_hdr)
+_lbl_status = mset.UILabel()
+_lbl_status.text = "Starting..."
 _window.addElement(_lbl_status)
 _window.addReturn()
 
-_lbl_endpoint = mset.UILabel("Endpoint:")
-_lbl_endpoint.value = f"http://{BRIDGE_HOST}:{BRIDGE_PORT}"
+_lbl_endpoint_hdr = mset.UILabel()
+_lbl_endpoint_hdr.text = "Endpoint:"
+_lbl_endpoint_hdr.fixedWidth = 80
+_window.addElement(_lbl_endpoint_hdr)
+_lbl_endpoint = mset.UILabel()
+_lbl_endpoint.text = f"http://{BRIDGE_HOST}:{BRIDGE_PORT}"
 _window.addElement(_lbl_endpoint)
 _window.addReturn()
 
-_lbl_actions = mset.UILabel("Actions:")
-_lbl_actions.value = "loading..."
+_lbl_actions_hdr = mset.UILabel()
+_lbl_actions_hdr.text = "Actions:"
+_lbl_actions_hdr.fixedWidth = 80
+_window.addElement(_lbl_actions_hdr)
+_lbl_actions = mset.UILabel()
+_lbl_actions.text = "loading..."
 _window.addElement(_lbl_actions)
 _window.addReturn()
 
-_lbl_requests = mset.UILabel("Requests:")
-_lbl_requests.value = "0"
+_lbl_requests_hdr = mset.UILabel()
+_lbl_requests_hdr.text = "Requests:"
+_lbl_requests_hdr.fixedWidth = 80
+_window.addElement(_lbl_requests_hdr)
+_lbl_requests = mset.UILabel()
+_lbl_requests.text = "0"
 _window.addElement(_lbl_requests)
 _window.addReturn()
-_window.addSpace()
+_window.addSpace(10)
 
 def _on_toggle():
     """Toggle the server on/off."""
@@ -74,7 +91,8 @@ def _on_toggle():
     else:
         _start_server()
 
-_btn_toggle = mset.UIButton("Stop Server")
+_btn_toggle = mset.UIButton()
+_btn_toggle.text = "Stop Server"
 _btn_toggle.onClick = _on_toggle
 _window.addElement(_btn_toggle)
 
@@ -82,12 +100,12 @@ _window.addElement(_btn_toggle)
 def _update_ui():
     """Refresh the UI labels."""
     if _running:
-        _lbl_status.value = "● Running"
-        _btn_toggle.title = "Stop Server"
+        _lbl_status.text = "Running"
+        _btn_toggle.text = "Stop Server"
     else:
-        _lbl_status.value = "○ Stopped"
-        _btn_toggle.title = "Start Server"
-    _lbl_requests.value = str(_request_count)
+        _lbl_status.text = "Stopped"
+        _btn_toggle.text = "Start Server"
+    _lbl_requests.text = str(_request_count)
 
 
 # ═══════════════════════════════════════════════════════════════════
