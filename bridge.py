@@ -20,7 +20,7 @@ import threading
 import queue
 import traceback
 import os
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 
 # ─── Configuration ────────────────────────────────────────────────
 BRIDGE_HOST = "127.0.0.1"
@@ -624,7 +624,8 @@ def _start_server():
         return
 
     try:
-        _server = HTTPServer((BRIDGE_HOST, BRIDGE_PORT), _Handler)
+        ThreadingHTTPServer.allow_reuse_address = True
+        _server = ThreadingHTTPServer((BRIDGE_HOST, BRIDGE_PORT), _Handler)
     except OSError as e:
         _lbl_status.text = f"ERROR: {e}"
         print(f"[{PLUGIN_NAME}] ERROR: {e}")
