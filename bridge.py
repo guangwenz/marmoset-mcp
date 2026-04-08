@@ -157,6 +157,7 @@ class _Handler(BaseHTTPRequestHandler):
 
     def _ok(self, data, code=200):
         payload = json.dumps(data, default=str).encode()
+        self.close_connection = True
         self.send_response(code)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(payload)))
@@ -164,6 +165,7 @@ class _Handler(BaseHTTPRequestHandler):
         self._cors()
         self.end_headers()
         self.wfile.write(payload)
+        self.wfile.flush()
 
     def _cors(self):
         self.send_header("Access-Control-Allow-Origin", "*")
